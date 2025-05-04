@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
-import 'package:kagi_news/api/api.dart';
-import 'package:kagi_news/api/news_categories.dart';
-import 'package:mocktail/mocktail.dart' as mock;
+import 'package:kagi_news/api/news_http_client.dart';
+import 'package:kagi_news/api/models/news_categories.dart';
 import 'package:widget_test_harness/widget_test_harness.dart';
 
 import '../helpers/harness_mixins.dart';

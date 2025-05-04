@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kagi_news/api/converters/list_empty_string_converter.dart';
 
 part 'category_feed.freezed.dart';
 part 'category_feed.g.dart';
@@ -38,30 +39,70 @@ abstract class Clusters with _$Clusters {
     @JsonKey(name: 'historical_background') String? historicalBackground,
     @Default([])
     @JsonKey(name: 'international_reactions')
+    @ListEmptyStringConverter()
     List<String> internationalReactions,
-    @JsonKey(name: 'humanitarian_impact') String? humanitarianImpact,
-    @JsonKey(name: 'economic_implications') String? economicImplications,
-    @JsonKey(name: 'timeline') List<String>? timeline,
-    @JsonKey(name: 'future_outlook') String? futureOutlook,
-    @JsonKey(name: 'key_players') List<dynamic>? keyPlayers,
-    @JsonKey(name: 'technical_details') String? technicalDetails,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'humanitarian_impact')
+    List<String> humanitarianImpact,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'economic_implications')
+    List<String> economicImplications,
+    @Default([]) @JsonKey(name: 'timeline') List<String> timeline,
+    @Default([]) @JsonKey(name: 'future_outlook') List<String> futureOutlook,
+    @Default([]) @JsonKey(name: 'key_players') List<dynamic> keyPlayers,
+    @Default([])
+    @ListEmptyStringConverter()
+    @JsonKey(name: 'technical_details')
+    List<String> technicalDetails,
     @JsonKey(name: 'business_angle_text') String? businessAngleText,
     @JsonKey(name: 'business_angle_points') List<dynamic>? businessAnglePoints,
-    @JsonKey(name: 'user_action_items') String? userActionItems,
+    @Default([])
+    @ListEmptyStringConverter()
+    @JsonKey(name: 'user_action_items')
+    List<String> userActionItems,
     @JsonKey(name: 'scientific_significance')
     List<dynamic>? scientificSignificance,
-    @JsonKey(name: 'travel_advisory') List<dynamic>? travelAdvisory,
-    @JsonKey(name: 'destination_highlights') String? destinationHighlights,
-    @JsonKey(name: 'culinary_significance') String? culinarySignificance,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'travel_advisory')
+    List<String> travelAdvisory,
+    @ListEmptyStringConverter()
+    @JsonKey(name: 'destination_highlights')
+    @Default([])
+    List<String> destinationHighlights,
+    @ListEmptyStringConverter()
+    @JsonKey(name: 'culinary_significance')
+    @Default([])
+    List<String> culinarySignificance,
     @JsonKey(name: 'performance_statistics')
     List<dynamic>? performanceStatistics,
     @JsonKey(name: 'league_standings') String? leagueStandings,
-    @JsonKey(name: 'diy_tips') String? diyTips,
-    @JsonKey(name: 'design_principles') String? designPrinciples,
-    @JsonKey(name: 'user_experience_impact') String? userExperienceImpact,
-    @JsonKey(name: 'gameplay_mechanics') List<dynamic>? gameplayMechanics,
-    @JsonKey(name: 'industry_impact') List<dynamic>? industryImpact,
-    @JsonKey(name: 'technical_specifications') String? technicalSpecifications,
+    @Default([])
+    @ListEmptyStringConverter()
+    @JsonKey(name: 'diy_tips')
+    List<String> diyTips,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'design_principles')
+    List<String> designPrinciples,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'user_experience_impact')
+    List<String> userExperienceImpact,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'gameplay_mechanics')
+    List<String> gameplayMechanics,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'industry_impact')
+    List<String> industryImpact,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'technical_specifications')
+    List<String> technicalSpecifications,
     @JsonKey(name: 'articles') List<Articles>? articles,
     @JsonKey(name: 'domains') List<Domains>? domains,
   }) = _Clusters;
