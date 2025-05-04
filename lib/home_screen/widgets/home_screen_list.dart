@@ -4,6 +4,8 @@ import 'package:kagi_news/api/models/news_categories.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_state.dart';
 import 'package:kagi_news/home_screen/widgets/_home_app_bar.dart';
+import 'package:kagi_news/home_screen/widgets/_home_list_tile.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreenPage extends StatelessWidget {
   const HomeScreenPage({super.key});
@@ -39,7 +41,13 @@ class HomeScreenPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: CustomScrollView(slivers: [const HomeAppBar(), ...widgets]),
+      body: RefreshIndicator(
+        displacement: 70,
+        onRefresh: () async {
+          context.read<HomeScreenCubit>().refresh();
+        },
+        child: CustomScrollView(slivers: [const HomeAppBar(), ...widgets]),
+      ),
     );
   }
 
@@ -52,7 +60,7 @@ class HomeScreenPage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             height: 64,
-            color: Colors.grey[800],
+            color: Colors.orange[800],
             child: Center(child: Text(category.name ?? '')),
           ),
         ),
@@ -99,45 +107,14 @@ class _HomeScreenList extends StatelessWidget {
       context,
       (state) => categoryState.categoryFeed.clusters.length,
     );
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index) {
-        final clusterData = categoryState.categoryFeed.clusters[index];
-        return ListTile(
-          title: Text(clusterData.title ?? ''),
-          subtitle: Text(clusterData.category ?? ''),
-          onTap: () {
-            // Handle category tap
-          },
-        );
-      }, childCount: childCount),
+    return Provider.value(
+      value: _category,
+      child: SliverList(
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final clusterData = categoryState.categoryFeed.clusters[index];
+          return HomeListTile(cluster: clusterData, index: index);
+        }, childCount: childCount),
+      ),
     );
   }
 }
-
-// class _HomeListSection extends StatelessWidget {
-//   const _HomeListSection({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SliverList(
-//       delegate: SliverChildBuilderDelegate(
-//         (context, index) {
-//           final category = HomeScreenCubit.select(
-//             context,
-//             (state) => state.listOfCategories!.categories[index],
-//           );
-//           return ListTile(
-//             title: Text(category.name),
-//             onTap: () {
-//               // Handle category tap
-//             },
-//           );
-//         },
-//         childCount: HomeScreenCubit.select(
-//           context,
-//           (state) => state.listOfCategories!.categories.length,
-//         ),
-//       ),
-//     );
-//   }
-// }

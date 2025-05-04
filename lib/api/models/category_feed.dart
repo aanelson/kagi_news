@@ -27,7 +27,10 @@ abstract class Clusters with _$Clusters {
     @JsonKey(name: 'title') String? title,
     @JsonKey(name: 'short_summary') String? shortSummary,
     @JsonKey(name: 'did_you_know') String? didYouKnow,
-    @JsonKey(name: 'talking_points') List<String>? talkingPoints,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'talking_points')
+    List<String>? talkingPoints,
     @JsonKey(name: 'quote') String? quote,
     @JsonKey(name: 'quote_author') String? quoteAuthor,
     @JsonKey(name: 'quote_source_url') String? quoteSourceUrl,
@@ -49,15 +52,27 @@ abstract class Clusters with _$Clusters {
     @Default([])
     @JsonKey(name: 'economic_implications')
     List<String> economicImplications,
-    @Default([]) @JsonKey(name: 'timeline') List<String> timeline,
-    @Default([]) @JsonKey(name: 'future_outlook') List<String> futureOutlook,
-    @Default([]) @JsonKey(name: 'key_players') List<dynamic> keyPlayers,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'timeline')
+    List<String> timeline,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'future_outlook')
+    List<String> futureOutlook,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'key_players')
+    List<String> keyPlayers,
     @Default([])
     @ListEmptyStringConverter()
     @JsonKey(name: 'technical_details')
     List<String> technicalDetails,
     @JsonKey(name: 'business_angle_text') String? businessAngleText,
-    @JsonKey(name: 'business_angle_points') List<dynamic>? businessAnglePoints,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'business_angle_points')
+    List<String> businessAnglePoints,
     @Default([])
     @ListEmptyStringConverter()
     @JsonKey(name: 'user_action_items')
@@ -69,16 +84,19 @@ abstract class Clusters with _$Clusters {
     @JsonKey(name: 'travel_advisory')
     List<String> travelAdvisory,
     @ListEmptyStringConverter()
-    @JsonKey(name: 'destination_highlights')
     @Default([])
+    @JsonKey(name: 'destination_highlights')
     List<String> destinationHighlights,
     @ListEmptyStringConverter()
-    @JsonKey(name: 'culinary_significance')
     @Default([])
+    @JsonKey(name: 'culinary_significance')
     List<String> culinarySignificance,
     @JsonKey(name: 'performance_statistics')
     List<dynamic>? performanceStatistics,
-    @JsonKey(name: 'league_standings') String? leagueStandings,
+    @ListEmptyStringConverter()
+    @Default([])
+    @JsonKey(name: 'league_standings')
+    List<String> leagueStandings,
     @Default([])
     @ListEmptyStringConverter()
     @JsonKey(name: 'diy_tips')

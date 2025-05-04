@@ -65,6 +65,7 @@ class CategoryState extends Equatable {
     this.error,
     this.categoryFeed = const CategoryFeed(),
     this.status = HomeScreenStateStatus.inital,
+    this.expandedCluster = const {},
   });
 
   final String? error;
@@ -72,14 +73,23 @@ class CategoryState extends Equatable {
   final HomeScreenStateStatus status;
   final CategoryFeed categoryFeed;
   final String categoryName;
+  final Set<int> expandedCluster;
   @override
-  List<Object?> get props => [error, categoryFeed, status, categoryName];
+  List<Object?> get props => [
+    error,
+    categoryFeed,
+    status,
+    categoryName,
+    expandedCluster,
+  ];
   CategoryState copyWith({
     String? error,
     HomeScreenStateStatus? status,
     CategoryFeed? categoryFeed,
+    Set<int>? expandedCluster,
   }) {
     return CategoryState(
+      expandedCluster: expandedCluster ?? this.expandedCluster,
       categoryName: categoryName,
       error: error ?? this.error,
       status: status ?? this.status,

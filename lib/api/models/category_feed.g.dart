@@ -35,9 +35,9 @@ _Clusters _$ClustersFromJson(Map<String, dynamic> json) => _Clusters(
   shortSummary: json['short_summary'] as String?,
   didYouKnow: json['did_you_know'] as String?,
   talkingPoints:
-      (json['talking_points'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      json['talking_points'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(json['talking_points']),
   quote: json['quote'] as String?,
   quoteAuthor: json['quote_author'] as String?,
   quoteSourceUrl: json['quote_source_url'] as String?,
@@ -69,14 +69,17 @@ _Clusters _$ClustersFromJson(Map<String, dynamic> json) => _Clusters(
             json['economic_implications'],
           ),
   timeline:
-      (json['timeline'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
+      json['timeline'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(json['timeline']),
   futureOutlook:
-      (json['future_outlook'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-  keyPlayers: json['key_players'] as List<dynamic>? ?? const [],
+      json['future_outlook'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(json['future_outlook']),
+  keyPlayers:
+      json['key_players'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(json['key_players']),
   technicalDetails:
       json['technical_details'] == null
           ? const []
@@ -84,7 +87,12 @@ _Clusters _$ClustersFromJson(Map<String, dynamic> json) => _Clusters(
             json['technical_details'],
           ),
   businessAngleText: json['business_angle_text'] as String?,
-  businessAnglePoints: json['business_angle_points'] as List<dynamic>?,
+  businessAnglePoints:
+      json['business_angle_points'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(
+            json['business_angle_points'],
+          ),
   userActionItems:
       json['user_action_items'] == null
           ? const []
@@ -109,7 +117,10 @@ _Clusters _$ClustersFromJson(Map<String, dynamic> json) => _Clusters(
             json['culinary_significance'],
           ),
   performanceStatistics: json['performance_statistics'] as List<dynamic>?,
-  leagueStandings: json['league_standings'] as String?,
+  leagueStandings:
+      json['league_standings'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(json['league_standings']),
   diyTips:
       json['diy_tips'] == null
           ? const []
@@ -160,7 +171,10 @@ Map<String, dynamic> _$ClustersToJson(_Clusters instance) => <String, dynamic>{
   'title': instance.title,
   'short_summary': instance.shortSummary,
   'did_you_know': instance.didYouKnow,
-  'talking_points': instance.talkingPoints,
+  'talking_points': _$JsonConverterToJson<dynamic, List<String>>(
+    instance.talkingPoints,
+    const ListEmptyStringConverter().toJson,
+  ),
   'quote': instance.quote,
   'quote_author': instance.quoteAuthor,
   'quote_source_url': instance.quoteSourceUrl,
@@ -179,14 +193,18 @@ Map<String, dynamic> _$ClustersToJson(_Clusters instance) => <String, dynamic>{
   'economic_implications': const ListEmptyStringConverter().toJson(
     instance.economicImplications,
   ),
-  'timeline': instance.timeline,
-  'future_outlook': instance.futureOutlook,
-  'key_players': instance.keyPlayers,
+  'timeline': const ListEmptyStringConverter().toJson(instance.timeline),
+  'future_outlook': const ListEmptyStringConverter().toJson(
+    instance.futureOutlook,
+  ),
+  'key_players': const ListEmptyStringConverter().toJson(instance.keyPlayers),
   'technical_details': const ListEmptyStringConverter().toJson(
     instance.technicalDetails,
   ),
   'business_angle_text': instance.businessAngleText,
-  'business_angle_points': instance.businessAnglePoints,
+  'business_angle_points': const ListEmptyStringConverter().toJson(
+    instance.businessAnglePoints,
+  ),
   'user_action_items': const ListEmptyStringConverter().toJson(
     instance.userActionItems,
   ),
@@ -201,7 +219,9 @@ Map<String, dynamic> _$ClustersToJson(_Clusters instance) => <String, dynamic>{
     instance.culinarySignificance,
   ),
   'performance_statistics': instance.performanceStatistics,
-  'league_standings': instance.leagueStandings,
+  'league_standings': const ListEmptyStringConverter().toJson(
+    instance.leagueStandings,
+  ),
   'diy_tips': const ListEmptyStringConverter().toJson(instance.diyTips),
   'design_principles': const ListEmptyStringConverter().toJson(
     instance.designPrinciples,
@@ -221,6 +241,11 @@ Map<String, dynamic> _$ClustersToJson(_Clusters instance) => <String, dynamic>{
   'articles': instance.articles,
   'domains': instance.domains,
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);
 
 _Domains _$DomainsFromJson(Map<String, dynamic> json) => _Domains(
   name: json['name'] as String?,
