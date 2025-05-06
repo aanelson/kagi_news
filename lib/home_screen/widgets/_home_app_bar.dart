@@ -26,7 +26,7 @@ class HomeAppBar extends StatelessWidget {
             }
             final categories = HomeScreenCubit.select(
               context,
-              (state) => state.listOfCategories!.categories,
+              (state) => state.listOfCategories,
             );
 
             return SingleChildScrollView(
@@ -39,7 +39,7 @@ class HomeAppBar extends StatelessWidget {
                         .map(
                           (item) => ButtonSegment(
                             value: item,
-                            label: Text(item.name!),
+                            label: Text(item.name),
                           ),
                         )
                         .toList(),

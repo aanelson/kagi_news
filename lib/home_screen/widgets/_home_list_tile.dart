@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kagi_news/api/models/category_feed.dart';
-import 'package:kagi_news/api/models/news_categories.dart';
-import 'package:kagi_news/home_screen/cubit/home_screen_cubit.dart';
+import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
 
 class HomeListTile extends StatelessWidget {
   const HomeListTile({super.key, required this.cluster, required this.index});
@@ -12,10 +9,8 @@ class HomeListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<NewsCategory>();
-    final isExpanded = HomeScreenCubit.select(context, (state) {
-      return state.categories[provider]?.expandedCluster.contains(index) ??
-          false;
+    final isExpanded = HomeScreenCategoryCubit.select(context, (state) {
+      return state.expandedCluster.contains(index);
     });
     final theme = Theme.of(context);
     final constraint =

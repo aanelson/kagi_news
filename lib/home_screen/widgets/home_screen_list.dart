@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kagi_news/api/models/news_categories.dart';
+import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
+import 'package:kagi_news/home_screen/cubit/home_screen_category_state.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_state.dart';
 import 'package:kagi_news/home_screen/widgets/_home_app_bar.dart';
 import 'package:kagi_news/home_screen/widgets/_home_list_tile.dart';
-import 'package:provider/provider.dart';
+import 'package:kagi_news/repositories/cached_api_repository.dart';
 
-class HomeScreenPage extends StatelessWidget {
+class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
+
+  @override
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage> {
+  bool _isFirstBuild = true;
+  @override
+  void didChangeDependencies() {
+    if (_isFirstBuild) {
+      _isFirstBuild = false;
+
+      Future.delayed(const Duration(seconds: 1)).then((_) {
+        if (mounted) {
+          context.read<HomeScreenCubit>().requestsCategories();
+        }
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +37,6 @@ class HomeScreenPage extends StatelessWidget {
     final status = HomeScreenCubit.select(context, (state) => state.status);
     switch (status) {
       case HomeScreenStateStatus.inital:
-        // hacky and gross
-        context.read<HomeScreenCubit>().initialLoad();
-        continue loading;
-      loading:
       case HomeScreenStateStatus.loading:
         widgets = [
           const SliverToBoxAdapter(
@@ -61,35 +78,43 @@ class HomeScreenPage extends StatelessWidget {
           child: Container(
             height: 64,
             color: Colors.orange[800],
-            child: Center(child: Text(category.name ?? '')),
+            child: Center(child: Text(category.name)),
           ),
         ),
-        _HomeScreenList(categoryState: category),
+        BlocProvider(
+          create:
+              (context) => HomeScreenCategoryCubit(
+                category: category,
+                apiRepository: context.read<CachedApiRepository>(),
+              )..requestCategory(),
+          child: const _HomeScreenList(),
+        ),
       ];
     }).toList();
   }
 }
 
 class _HomeScreenList extends StatelessWidget {
-  const _HomeScreenList({super.key, required NewsCategory categoryState})
-    : _category = categoryState;
-  final NewsCategory _category;
+  const _HomeScreenList({super.key});
   @override
   Widget build(BuildContext context) {
-    final categoryState = HomeScreenCubit.select(
+    final status = HomeScreenCategoryCubit.select(
       context,
-      (state) => state.categories[_category],
+      (state) => state.status,
     );
-    if (categoryState == null ||
-        categoryState.status == HomeScreenStateStatus.error) {
+    if (status == CategoryStateStatus.error) {
+      final error = HomeScreenCategoryCubit.select(
+        context,
+        (state) => state.error,
+      );
       return SliverToBoxAdapter(
         child: Center(
           child: Column(
             children: [
-              Text('Error loading data: ${categoryState?.error}'),
+              Text('Error loading data: $error'),
               ElevatedButton(
                 onPressed: () {
-                  context.read<HomeScreenCubit>().requestCategory(_category);
+                  context.read<HomeScreenCategoryCubit>().requestCategory();
                 },
                 child: const Text('Retry'),
               ),
@@ -98,23 +123,20 @@ class _HomeScreenList extends StatelessWidget {
         ),
       );
     }
-    if (categoryState.status == HomeScreenStateStatus.loading) {
+    if (status == CategoryStateStatus.loading) {
       return const SliverToBoxAdapter(
         child: Center(child: CircularProgressIndicator()),
       );
     }
-    final childCount = HomeScreenCubit.select(
+    final clusters = HomeScreenCategoryCubit.select(
       context,
-      (state) => categoryState.categoryFeed.clusters.length,
+      (state) => state.categoryFeed.clusters,
     );
-    return Provider.value(
-      value: _category,
-      child: SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          final clusterData = categoryState.categoryFeed.clusters[index];
-          return HomeListTile(cluster: clusterData, index: index);
-        }, childCount: childCount),
-      ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final clusterData = clusters[index];
+        return HomeListTile(cluster: clusterData, index: index);
+      }, childCount: clusters.length),
     );
   }
 }

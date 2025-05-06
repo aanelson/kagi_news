@@ -1,21 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:kagi_news/api/models/category_feed.dart';
-import 'package:kagi_news/api/models/news_categories.dart';
+import 'package:kagi_news/api/models/url_category_map.dart';
 
 enum HomeScreenStateStatus { inital, loading, loaded, error }
 
 class HomeScreenState extends Equatable {
   HomeScreenState.initial()
     : this(
-        categories: const {},
-        listOfCategories: null,
+        listOfCategories: const [],
         status: HomeScreenStateStatus.inital,
         errorMessage: '',
         selectedCategories: {},
         displayedCategories: const [],
       );
   const HomeScreenState({
-    required this.categories,
     required this.listOfCategories,
     required this.status,
     required this.errorMessage,
@@ -23,17 +21,16 @@ class HomeScreenState extends Equatable {
     required this.displayedCategories,
   });
   HomeScreenState copyWith({
-    NewsCategories? listOfCategories,
-    Map<NewsCategory, CategoryState>? categories,
+    List<UrlCategoryMap>? listOfCategories,
     HomeScreenStateStatus? status,
     String? errorMessage,
-    Set<NewsCategory>? selectedCategories,
-    List<NewsCategory>? displayedCategories,
+    Set<UrlCategoryMap>? selectedCategories,
+
+    List<UrlCategoryMap>? displayedCategories,
   }) {
     return HomeScreenState(
       displayedCategories: displayedCategories ?? this.displayedCategories,
       selectedCategories: selectedCategories ?? this.selectedCategories,
-      categories: categories ?? this.categories,
       listOfCategories: listOfCategories ?? this.listOfCategories,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
@@ -41,16 +38,14 @@ class HomeScreenState extends Equatable {
   }
 
   bool get isLoaded => status == HomeScreenStateStatus.loaded;
-  final NewsCategories? listOfCategories;
-  final Map<NewsCategory, CategoryState> categories;
-  final List<NewsCategory> displayedCategories;
+  final List<UrlCategoryMap> listOfCategories;
+  final List<UrlCategoryMap> displayedCategories;
   final HomeScreenStateStatus status;
   final String errorMessage;
 
-  final Set<NewsCategory> selectedCategories;
+  final Set<UrlCategoryMap> selectedCategories;
   @override
   List<Object?> get props => [
-    categories,
     listOfCategories,
     status,
     errorMessage,
@@ -61,25 +56,27 @@ class HomeScreenState extends Equatable {
 
 class CategoryState extends Equatable {
   const CategoryState({
-    required this.categoryName,
+    required this.name,
+    required this.categoryMap,
     this.error,
     this.categoryFeed = const CategoryFeed(),
     this.status = HomeScreenStateStatus.inital,
     this.expandedCluster = const {},
   });
+  final UrlCategoryMap categoryMap;
 
   final String? error;
   bool get isLoaded => status == HomeScreenStateStatus.loaded;
   final HomeScreenStateStatus status;
   final CategoryFeed categoryFeed;
-  final String categoryName;
+  final String name;
   final Set<int> expandedCluster;
   @override
   List<Object?> get props => [
     error,
     categoryFeed,
     status,
-    categoryName,
+    name,
     expandedCluster,
   ];
   CategoryState copyWith({
@@ -89,8 +86,9 @@ class CategoryState extends Equatable {
     Set<int>? expandedCluster,
   }) {
     return CategoryState(
+      categoryMap: categoryMap,
       expandedCluster: expandedCluster ?? this.expandedCluster,
-      categoryName: categoryName,
+      name: name,
       error: error ?? this.error,
       status: status ?? this.status,
       categoryFeed: categoryFeed ?? this.categoryFeed,
