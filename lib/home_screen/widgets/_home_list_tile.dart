@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kagi_news/api/models/category_feed.dart';
+import 'package:kagi_news/details_screen/details_screen.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
 
 class HomeListTile extends StatelessWidget {
@@ -28,25 +29,30 @@ class HomeListTile extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 8,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              cluster.title ?? 'No title',
-              style: theme.primaryTextTheme.labelLarge,
-            ),
-            Flexible(
-              child: Text(
-                cluster.shortSummary ?? 'No summary',
-                style: theme.primaryTextTheme.bodySmall,
-                overflow: TextOverflow.clip,
+        child: InkWell(
+          onTap: () {
+            navigateToDetailsScreen(context, cluster);
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 8,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                cluster.title ?? 'No title',
+                style: theme.primaryTextTheme.labelLarge,
               ),
-            ),
+              Flexible(
+                child: Text(
+                  cluster.shortSummary ?? 'No summary',
+                  style: theme.primaryTextTheme.bodySmall,
+                  overflow: TextOverflow.clip,
+                ),
+              ),
 
-            if (isExpanded) ...[],
-          ],
+              if (isExpanded) ...[],
+            ],
+          ),
         ),
       ),
     );

@@ -95,7 +95,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 }
 
 class _HomeScreenList extends StatelessWidget {
-  const _HomeScreenList({super.key});
+  const _HomeScreenList();
   @override
   Widget build(BuildContext context) {
     final status = HomeScreenCategoryCubit.select(
