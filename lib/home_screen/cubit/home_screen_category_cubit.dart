@@ -24,6 +24,16 @@ class HomeScreenCategoryCubit extends Cubit<HomeScreenCategoryState> {
 
   Future<void> requestCategory({bool forceRefresh = false}) async {
     try {
+      final cache = _apiRepository.getCategoryFromCache(this.category.file);
+      if (cache != null && !forceRefresh) {
+        emit(
+          state.copyWith(
+            status: CategoryStateStatus.loaded,
+            categoryFeed: cache,
+          ),
+        );
+        return;
+      }
       emit(state.copyWith(status: CategoryStateStatus.loading, error: null));
       final category = await _apiRepository.getCategory(
         category: state.categoryMap,

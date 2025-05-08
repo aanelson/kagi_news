@@ -8,7 +8,7 @@ class CachedApiRepository {
   final NewsHttpClient _newsHttpClient;
   final AsyncCache<UrlCategoryMapList> _categoryCache =
       AsyncCache<UrlCategoryMapList>(const Duration(hours: 1));
-  final Map<String, AsyncCache<CategoryFeed>> _categoriesCache = {};
+  final Map<String, CategoryFeed> _categoriesCache = {};
 
   Future<UrlCategoryMapList> getCategories({bool forceRefresh = false}) async {
     if (forceRefresh) {
@@ -20,22 +20,19 @@ class CachedApiRepository {
     });
   }
 
+  CategoryFeed? getCategoryFromCache(String file) {
+    return _categoriesCache[file];
+  }
+
   Future<CategoryFeed> getCategory({
     required UrlCategoryMap category,
     bool forceRefresh = false,
   }) async {
-    final cache =
-        _categoriesCache[category.file] ??= AsyncCache<CategoryFeed>(
-          const Duration(hours: 1),
-        );
-    if (forceRefresh) {
-      cache.invalidate();
+    final cachedValue = _categoriesCache[category.file];
+    if (!forceRefresh && cachedValue != null) {
+      return cachedValue;
     }
-    return cache.fetch(() async {
-      final categoryFeed = await _newsHttpClient.getCategory(
-        category: category,
-      );
-      return categoryFeed;
-    });
+    final categoryFeed = await _newsHttpClient.getCategory(category: category);
+    return _categoriesCache[category.file] = categoryFeed;
   }
 }

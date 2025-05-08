@@ -40,7 +40,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       case HomeScreenStateStatus.loading:
         widgets = [
           const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(child: CircularProgressIndicator()),
+            ),
           ),
         ];
         break;
@@ -77,11 +80,17 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         SliverToBoxAdapter(
           child: Container(
             height: 64,
-            color: Colors.orange[800],
-            child: Center(child: Text(category.name)),
+            color: Theme.of(context).colorScheme.primary,
+            child: Center(
+              child: Text(
+                category.name,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
+              ),
+            ),
           ),
         ),
         BlocProvider(
+          key: ValueKey(category.name),
           create:
               (context) => HomeScreenCategoryCubit(
                 category: category,

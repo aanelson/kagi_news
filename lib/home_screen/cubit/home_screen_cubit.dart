@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kagi_news/api/models/url_category_map.dart';
@@ -18,7 +19,6 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       emit(
         state.copyWith(
           status: HomeScreenStateStatus.loading,
-
           displayedCategories: [],
         ),
       );
@@ -50,6 +50,14 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     }
   }
 
+  final colorTween = ColorTween(
+    begin: Color.fromARGB(255, 254, 178, 25),
+    end: Color.fromARGB(255, 108, 94, 220),
+  );
+  Color? _updateColorSeed(Set<UrlCategoryMap> selectedCategories) {
+    return colorTween.transform(selectedCategories.length / 10);
+  }
+
   Future<void> _loadDisplayedCategories() async {
     final displayedCategories =
         state.listOfCategories
@@ -61,7 +69,12 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   Future<void> updateCategorySelection(
     Set<UrlCategoryMap> selectedCategories,
   ) async {
-    emit(state.copyWith(selectedCategories: selectedCategories));
+    emit(
+      state.copyWith(
+        selectedCategories: selectedCategories,
+        colorSeed: _updateColorSeed(selectedCategories),
+      ),
+    );
     await _loadDisplayedCategories();
   }
 }
