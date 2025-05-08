@@ -23,7 +23,8 @@ class NewsHttpClient {
     if (response.statusCode != 200) {
       throw Exception('Failed to load category data');
     }
-    final decode = jsonDecode(response.body);
+    final utf8String = utf8.decode(response.bodyBytes);
+    final decode = jsonDecode(utf8String);
     return UrlCategoryMapList.fromJson(decode);
   }
 
@@ -32,7 +33,8 @@ class NewsHttpClient {
     if (response.statusCode != 200) {
       throw Exception('Failed to load category data');
     }
-    final decode = jsonDecode(response.body);
+    final utf8String = utf8.decode(response.bodyBytes);
+    final decode = jsonDecode(utf8String);
     return CategoryFeed.fromJson(decode);
   }
 }
