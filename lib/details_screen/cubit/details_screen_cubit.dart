@@ -27,6 +27,7 @@ class DetailsCubit extends Cubit<DetailsState> {
             cluster.articles
                 ?.map((item) => item.image)
                 .whereType<String>()
+                .where((item) => item.isNotEmpty)
                 .toList() ??
             [],
         economicImplications: cluster.economicImplications.toSplitDetails(),

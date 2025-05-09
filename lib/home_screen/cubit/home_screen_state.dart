@@ -14,7 +14,7 @@ class HomeScreenState extends Equatable {
         errorMessage: '',
         selectedCategories: {},
         displayedCategories: const [],
-        colorSeed: Color.fromARGB(255, 254, 178, 25),
+        colorSeed: Color.fromARGB(255, 157, 235, 254),
       );
   const HomeScreenState({
     required this.listOfCategories,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_news/details_screen/details_screen.dart';
+import 'package:kagi_news/details_screen/details_screen_navigation.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_category_state.dart';
 
 class HomeListTile extends StatelessWidget {

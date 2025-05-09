@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kagi_news/api/models/request_id.dart';
 import 'package:kagi_news/details_screen/cubit/details_screen_cubit.dart';
 import 'package:kagi_news/details_screen/widgets/horizontal_scroll_list.dart';
 import 'package:kagi_news/details_screen/widgets/timeline_list.dart';
-import 'package:kagi_news/repositories/cached_api_repository.dart';
 
-class ClusterPage extends StatelessWidget {
-  const ClusterPage({super.key});
+class DetailsPage extends StatelessWidget {
+  const DetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,26 +70,6 @@ class ClusterPage extends StatelessWidget {
 }
 
 // Navigation example from HomeListTile
-void navigateToDetailsScreen(
-  BuildContext context, {
-  required RequestId id,
-  required int index,
-}) async {
-  final cluster =
-      RepositoryProvider.of<CachedApiRepository>(
-        context,
-      ).getCategoryFromCache(id)!.clusters[index];
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder:
-          (context) => BlocProvider(
-            create: (context) => DetailsCubit.fromCluster(cluster),
-            child: const ClusterPage(),
-          ),
-    ),
-  );
-}
 
 class _Body extends StatelessWidget {
   const _Body();
@@ -175,7 +152,7 @@ class _Image extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return Image.network(
-      imageUrl,
+      imageUrl.toString(),
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
         return const Center(child: CircularProgressIndicator());

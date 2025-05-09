@@ -8,16 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/api.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/category_feed.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/category_feed.freezed.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/category_feed.g.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/news_categories.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/news_categories.freezed.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api/news_categories.g.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/api/api_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/api/api_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/details_screen/cubit/details_screen_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/details_screen/cubit/details_screen_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/details_screen/details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/details_screen/details_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home_screen/cubit/home_screen_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_screen/cubit/home_screen_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home_screen/widgets/_home_list_tile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_screen/widgets/_home_list_tile.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,8 +64,12 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/flutter/kagi/kagi_news",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.language.Kotlin.scripting",
     "show.migrate.to.gradle.popup": "false"
   }
