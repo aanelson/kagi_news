@@ -16,6 +16,7 @@ class DetailsState extends Equatable {
     required this.timeline,
     required this.talkingPoints,
     required this.location,
+    required this.scientificSignificance,
   });
   final String title;
   final List<String> images;
@@ -27,6 +28,7 @@ class DetailsState extends Equatable {
   final List<SplitDetails> businessAnglePoints;
   final List<SplitDetails> designPrinciples;
   final List<SplitDetails> talkingPoints;
+  final List<SplitDetails> scientificSignificance;
   final List<Source> sources;
   final List<SplitDetails> timeline;
   final String location;
@@ -38,6 +40,7 @@ class DetailsState extends Equatable {
     talkingPoints,
     timeline,
     summary,
+    scientificSignificance,
     designPrinciples,
     didYouKnow,
     economicImplications,

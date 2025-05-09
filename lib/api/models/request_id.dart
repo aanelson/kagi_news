@@ -1,3 +1,5 @@
-abstract class RequestId {
-  String get file;
+class RequestId {
+  final String file;
+
+  RequestId(this.file);
 }

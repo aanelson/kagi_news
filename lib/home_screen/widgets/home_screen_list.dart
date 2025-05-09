@@ -4,13 +4,15 @@ import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_category_state.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_state.dart';
-import 'package:kagi_news/home_screen/repository/home_screen_repository.dart';
 import 'package:kagi_news/home_screen/widgets/_home_app_bar.dart';
 import 'package:kagi_news/home_screen/widgets/_home_list_tile.dart';
 
 class HomeScreenPage extends StatefulWidget {
-  const HomeScreenPage({super.key});
-
+  const HomeScreenPage({
+    super.key,
+    this.startupDelay = const Duration(seconds: 1),
+  });
+  final Duration startupDelay;
   @override
   State<HomeScreenPage> createState() => _HomeScreenPageState();
 }
@@ -22,7 +24,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     if (_isFirstBuild) {
       _isFirstBuild = false;
 
-      Future.delayed(const Duration(seconds: 1)).then((_) {
+      Future.delayed(widget.startupDelay).then((_) {
         if (mounted) {
           context.read<HomeScreenCubit>().requestsCategories();
         }

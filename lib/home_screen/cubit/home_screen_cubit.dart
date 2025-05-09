@@ -51,7 +51,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   }
 
   final colorTween = ColorTween(
-    begin: Color.fromARGB(255, 254, 178, 25),
+    begin: Color.fromARGB(255, 157, 235, 254),
     end: Color.fromARGB(255, 108, 94, 220),
   );
   Color? _updateColorSeed(Set<UrlCategoryMap> selectedCategories) {

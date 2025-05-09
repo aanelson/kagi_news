@@ -35,6 +35,7 @@ class DetailsCubit extends Cubit<DetailsState> {
         businessAnglePoints: cluster.businessAnglePoints.toSplitDetails(),
         designPrinciples: cluster.designPrinciples.toSplitDetails(),
         location: cluster.location ?? '',
+        scientificSignificance: cluster.scientificSignificance.toSplitDetails(),
         timeline: cluster.timeline.toSplitDetails('::'),
         talkingPoints: cluster.talkingPoints?.toSplitDetails() ?? [],
         sources:

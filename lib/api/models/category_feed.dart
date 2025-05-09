@@ -77,8 +77,10 @@ abstract class Clusters with _$Clusters {
     @ListEmptyStringConverter()
     @JsonKey(name: 'user_action_items')
     List<String> userActionItems,
+    @ListEmptyStringConverter()
+    @Default([])
     @JsonKey(name: 'scientific_significance')
-    List<dynamic>? scientificSignificance,
+    List<String> scientificSignificance,
     @ListEmptyStringConverter()
     @Default([])
     @JsonKey(name: 'travel_advisory')

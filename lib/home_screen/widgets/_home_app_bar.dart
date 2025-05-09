@@ -8,7 +8,7 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: const Text('Kagi News'),
+      title: const Text('Kagi News', key: Key('app_title')),
       floating: true,
       pinned: true,
       expandedHeight: 100,
@@ -32,6 +32,7 @@ class HomeAppBar extends StatelessWidget {
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SegmentedButton(
+                key: const Key('category_selection'),
                 emptySelectionAllowed: true,
                 multiSelectionEnabled: true,
                 segments:

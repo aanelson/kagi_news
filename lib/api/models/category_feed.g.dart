@@ -99,7 +99,12 @@ _Clusters _$ClustersFromJson(Map<String, dynamic> json) => _Clusters(
           : const ListEmptyStringConverter().fromJson(
             json['user_action_items'],
           ),
-  scientificSignificance: json['scientific_significance'] as List<dynamic>?,
+  scientificSignificance:
+      json['scientific_significance'] == null
+          ? const []
+          : const ListEmptyStringConverter().fromJson(
+            json['scientific_significance'],
+          ),
   travelAdvisory:
       json['travel_advisory'] == null
           ? const []
@@ -208,7 +213,9 @@ Map<String, dynamic> _$ClustersToJson(_Clusters instance) => <String, dynamic>{
   'user_action_items': const ListEmptyStringConverter().toJson(
     instance.userActionItems,
   ),
-  'scientific_significance': instance.scientificSignificance,
+  'scientific_significance': const ListEmptyStringConverter().toJson(
+    instance.scientificSignificance,
+  ),
   'travel_advisory': const ListEmptyStringConverter().toJson(
     instance.travelAdvisory,
   ),

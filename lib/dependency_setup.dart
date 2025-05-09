@@ -11,7 +11,6 @@ Widget setupDependencyInjection({required Widget child}) {
   return MultiRepositoryProvider(
     providers: [
       RepositoryProvider(create: (context) => NewsHttpClient(client)),
-
       RepositoryProvider(
         create:
             (context) => CachedApiRepository(RepositoryProvider.of(context)),

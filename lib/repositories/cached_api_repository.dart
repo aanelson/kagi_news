@@ -5,10 +5,12 @@ import 'package:kagi_news/api/models/url_category_map.dart';
 import 'package:kagi_news/api/news_http_client.dart';
 
 class CachedApiRepository {
-  CachedApiRepository(this._newsHttpClient);
+  CachedApiRepository(
+    this._newsHttpClient, [
+    Duration cacheDuration = const Duration(hours: 1),
+  ]) : _categoryCache = AsyncCache<UrlCategoryMapList>(cacheDuration);
   final NewsHttpClient _newsHttpClient;
-  final AsyncCache<UrlCategoryMapList> _categoryCache =
-      AsyncCache<UrlCategoryMapList>(const Duration(hours: 1));
+  final AsyncCache<UrlCategoryMapList> _categoryCache;
   final Map<String, CategoryFeed> _categoriesCache = {};
 
   Future<UrlCategoryMapList> getCategories({bool forceRefresh = false}) async {
