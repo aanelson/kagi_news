@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kagi_news/api/models/category_feed.dart';
+import 'package:kagi_news/api/models/request_id.dart';
 import 'package:kagi_news/details_screen/cubit/details_screen_cubit.dart';
-import 'package:kagi_news/details_screen/horizontal_scroll_list.dart';
+import 'package:kagi_news/details_screen/widgets/horizontal_scroll_list.dart';
+import 'package:kagi_news/details_screen/widgets/timeline_list.dart';
+import 'package:kagi_news/repositories/cached_api_repository.dart';
 
 class ClusterPage extends StatelessWidget {
   const ClusterPage({super.key});
@@ -36,12 +38,16 @@ class ClusterPage extends StatelessWidget {
             ),
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
-              sliver: SliverToBoxAdapter(
-                child: Opacity(opacity: 1, child: Center(child: text)),
-              ),
+              sliver: SliverToBoxAdapter(child: Center(child: text)),
             ),
 
             const _Body(),
+            TimelineList(
+              listDetails: DetailsCubit.select(
+                context,
+                (state) => state.timeline,
+              ),
+            ),
             SliverToBoxAdapter(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -67,7 +73,15 @@ class ClusterPage extends StatelessWidget {
 }
 
 // Navigation example from HomeListTile
-void navigateToDetailsScreen(BuildContext context, Clusters cluster) {
+void navigateToDetailsScreen(
+  BuildContext context, {
+  required RequestId id,
+  required int index,
+}) async {
+  final cluster =
+      RepositoryProvider.of<CachedApiRepository>(
+        context,
+      ).getCategoryFromCache(id)!.clusters[index];
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -84,28 +98,12 @@ class _Body extends StatelessWidget {
   const _Body();
   @override
   Widget build(BuildContext context) {
-    final image = DetailsCubit.select(
-      context,
-      (state) => state.images.firstOrNull,
-    );
     final historicalBackground = DetailsCubit.select(
       context,
       (state) => state.historicalBackground,
     );
     return SliverList.list(
       children: [
-        // if (image != null)
-        //   Image.network(
-        //     image,
-        //     loadingBuilder:
-        //         (context, child, loadingProgress) =>
-        //             loadingProgress == null
-        //                 ? child
-        //                 : const Center(child: CircularProgressIndicator()),
-        //     fit: BoxFit.cover,
-        //     height: 200,
-        //     width: double.infinity,
-        //   ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(

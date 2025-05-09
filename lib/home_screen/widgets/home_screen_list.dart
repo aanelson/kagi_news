@@ -4,9 +4,9 @@ import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_category_state.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_cubit.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_state.dart';
+import 'package:kagi_news/home_screen/repository/home_screen_repository.dart';
 import 'package:kagi_news/home_screen/widgets/_home_app_bar.dart';
 import 'package:kagi_news/home_screen/widgets/_home_list_tile.dart';
-import 'package:kagi_news/repositories/cached_api_repository.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -92,9 +92,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         BlocProvider(
           key: ValueKey(category.name),
           create:
-              (context) => HomeScreenCategoryCubit(
+              (ctx) => HomeScreenCategoryCubit(
                 category: category,
-                apiRepository: context.read<CachedApiRepository>(),
+                homeScreenRepository: context.read(),
               )..requestCategory(),
           child: const _HomeScreenList(),
         ),
@@ -137,15 +137,15 @@ class _HomeScreenList extends StatelessWidget {
         child: Center(child: CircularProgressIndicator()),
       );
     }
-    final clusters = HomeScreenCategoryCubit.select(
+    final data = HomeScreenCategoryCubit.select(
       context,
-      (state) => state.categoryFeed.clusters,
+      (state) => state.items,
     );
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        final clusterData = clusters[index];
-        return HomeListTile(cluster: clusterData, index: index);
-      }, childCount: clusters.length),
+        final item = data[index];
+        return HomeListTile(item: item, index: index);
+      }, childCount: data.length),
     );
   }
 }

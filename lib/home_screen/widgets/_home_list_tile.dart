@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_news/api/models/category_feed.dart';
 import 'package:kagi_news/details_screen/details_screen.dart';
 import 'package:kagi_news/home_screen/cubit/home_screen_category_cubit.dart';
+import 'package:kagi_news/home_screen/cubit/home_screen_category_state.dart';
 
 class HomeListTile extends StatelessWidget {
-  const HomeListTile({super.key, required this.cluster, required this.index});
-  final Clusters cluster;
+  const HomeListTile({super.key, required this.item, required this.index});
+  final HomeScreenListItem item;
   final int index;
 
   @override
@@ -31,25 +31,24 @@ class HomeListTile extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            navigateToDetailsScreen(context, cluster);
+            navigateToDetailsScreen(context, id: item.id, index: index);
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             spacing: 8,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                cluster.title ?? 'No title',
-                style: theme.primaryTextTheme.labelLarge,
-              ),
-              Flexible(
-                child: Text(
-                  cluster.shortSummary ?? 'No summary',
-                  style: theme.primaryTextTheme.bodySmall,
-                  overflow: TextOverflow.clip,
+              Text(item.title, style: theme.primaryTextTheme.labelLarge),
+              if (item.location.isNotEmpty)
+                Flexible(
+                  child: Text(
+                    item.location,
+                    style: theme.primaryTextTheme.bodySmall,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
-              ),
-
+              Text('# of articles: ${item.numberOfArticles}'),
+              Text('# of websites: ${item.uniqueDomains}'),
               if (isExpanded) ...[],
             ],
           ),

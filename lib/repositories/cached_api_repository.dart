@@ -1,5 +1,6 @@
 import 'package:async/async.dart';
 import 'package:kagi_news/api/models/category_feed.dart';
+import 'package:kagi_news/api/models/request_id.dart';
 import 'package:kagi_news/api/models/url_category_map.dart';
 import 'package:kagi_news/api/news_http_client.dart';
 
@@ -20,12 +21,12 @@ class CachedApiRepository {
     });
   }
 
-  CategoryFeed? getCategoryFromCache(String file) {
-    return _categoriesCache[file];
+  CategoryFeed? getCategoryFromCache(RequestId id) {
+    return _categoriesCache[id.file];
   }
 
   Future<CategoryFeed> getCategory({
-    required UrlCategoryMap category,
+    required RequestId category,
     bool forceRefresh = false,
   }) async {
     final cachedValue = _categoriesCache[category.file];

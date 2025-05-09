@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kagi_news/api/models/request_id.dart';
 
 part 'url_category_map.freezed.dart';
 part 'url_category_map.g.dart';
@@ -15,7 +16,7 @@ abstract class UrlCategoryMapList with _$UrlCategoryMapList {
 }
 
 @freezed
-abstract class UrlCategoryMap with _$UrlCategoryMap {
+abstract class UrlCategoryMap with _$UrlCategoryMap implements RequestId {
   factory UrlCategoryMap({required String name, required String file}) =
       _UrlCategoryMap;
 

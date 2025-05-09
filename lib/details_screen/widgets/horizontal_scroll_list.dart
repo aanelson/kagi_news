@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_news/details_screen/cubit/details_screen_cubit.dart';
+import 'package:kagi_news/details_screen/cubit/details_screen_state.dart';
 
 class HorizontalAnimatingScrollView<T> extends StatefulWidget {
   const HorizontalAnimatingScrollView({
