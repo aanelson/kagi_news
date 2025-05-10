@@ -63,12 +63,14 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     }
 
     return Scaffold(
-      body: RefreshIndicator(
-        displacement: 70,
-        onRefresh: () async {
-          context.read<HomeScreenCubit>().refresh();
-        },
-        child: CustomScrollView(slivers: [const HomeAppBar(), ...widgets]),
+      body: SafeArea(
+        child: RefreshIndicator(
+          displacement: 70,
+          onRefresh: () async {
+            context.read<HomeScreenCubit>().refresh();
+          },
+          child: CustomScrollView(slivers: [const HomeAppBar(), ...widgets]),
+        ),
       ),
     );
   }

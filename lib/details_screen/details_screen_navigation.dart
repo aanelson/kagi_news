@@ -19,7 +19,15 @@ void navigateToDetailsScreen(
   final cubit = DetailsCubit.fromCluster(cluster);
   final nav = Navigator.of(context);
   await Future.delayed(const Duration());
-  nav.push(createRoute(cubit));
+  nav.push(
+    MaterialPageRoute(
+      builder:
+          (context) => BlocProvider(
+            create: (context) => cubit,
+            child: const DetailsPage(),
+          ),
+    ),
+  );
 }
 
 const list = [
